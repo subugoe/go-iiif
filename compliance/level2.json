@@ -25,8 +25,8 @@
 	     		"noAutoRotate":      { "syntax": "-1",         "required": false, "supported": true, "match": "^\\-1$" }
 	     },
 	     "quality": {
-	     		"default": { "syntax": "default", "required": true, "supported": true, "match": "^default$", "default": false },
-	     		"color":   { "syntax": "color",   "required": false, "supported": true, "match": "^colou?r$", "default": true },
+	     		"default": { "syntax": "default", "required": true, "supported": true, "match": "^default$", "default": true },
+	     		"color":   { "syntax": "color",   "required": false, "supported": true, "match": "^colou?r$", "default": false },
 	     		"gray":    { "syntax": "gray",    "required": false, "supported": false, "match": "gr(?:e|a)y$", "default": false },			
 	     		"bitonal": { "syntax": "bitonal", "required": true, "supported": true, "match": "^bitonal$", "default": false }
              },
