@@ -34,9 +34,6 @@ const (
 	FeatureMetadata2
 )
 
-// Hardcoded value to specify which version of the user agent we're using
-const uaMetadata = "ua/2.1"
-
 func (k SDKAgentKeyType) string() string {
 	switch k {
 	case APIMetadata:
@@ -88,7 +85,6 @@ const (
 	UserAgentFeatureS3ExpressBucket                         = "J"
 	UserAgentFeatureS3AccessGrants                          = "K" // not yet implemented
 	UserAgentFeatureGZIPRequestCompression                  = "L"
-	UserAgentFeatureProtocolRPCV2CBOR                       = "M"
 )
 
 // RequestUserAgent is a build middleware that set the User-Agent for the request.
@@ -110,7 +106,6 @@ type RequestUserAgent struct {
 func NewRequestUserAgent() *RequestUserAgent {
 	userAgent, sdkAgent := smithyhttp.NewUserAgentBuilder(), smithyhttp.NewUserAgentBuilder()
 	addProductName(userAgent)
-	addUserAgentMetadata(userAgent)
 	addProductName(sdkAgent)
 
 	r := &RequestUserAgent{
@@ -136,10 +131,6 @@ func addSDKMetadata(r *RequestUserAgent) {
 
 func addProductName(builder *smithyhttp.UserAgentBuilder) {
 	builder.AddKeyValue(aws.SDKName, aws.SDKVersion)
-}
-
-func addUserAgentMetadata(builder *smithyhttp.UserAgentBuilder) {
-	builder.AddKey(uaMetadata)
 }
 
 // AddUserAgentKey retrieves a requestUserAgent from the provided stack, or initializes one.
@@ -266,10 +257,10 @@ func (u *RequestUserAgent) HandleBuild(ctx context.Context, in middleware.BuildI
 
 func (u *RequestUserAgent) addHTTPUserAgent(request *smithyhttp.Request) {
 	const userAgent = "User-Agent"
+	updateHTTPHeader(request, userAgent, u.userAgent.Build())
 	if len(u.features) > 0 {
 		updateHTTPHeader(request, userAgent, buildFeatureMetrics(u.features))
 	}
-	updateHTTPHeader(request, userAgent, u.userAgent.Build())
 }
 
 func (u *RequestUserAgent) addHTTPSDKAgent(request *smithyhttp.Request) {

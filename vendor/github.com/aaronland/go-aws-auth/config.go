@@ -3,11 +3,10 @@ package auth
 import (
 	"context"
 	"fmt"
-	"log/slog"
 	"net/url"
 	"os/user"
 	"path/filepath"
-	_ "sort"
+	"sort"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -18,49 +17,20 @@ import (
 // null_cfg is a placeholder to return in error contexts.
 var null_cfg aws.Config
 
-const AnonymousCredentialsString string = "anon:"
+// CredentialsStringPatterns() returns the list of valid credential strings patterns.
+func CredentialsStringPatterns() []string {
 
-const EnvironmentCredentialsString string = "env:"
-
-const IAMCredentialsString string = "iam:"
-
-const ProfileCredentialsTemplate string = "{profile}"
-
-const ProfileFromPathCredentialsTemplate string = "{path}:{profile}"
-
-const StaticCredentialsTemplate string = "static:{id}:{key}:{secret}"
-
-const StaticCredentialsPrefix string = "static:"
-
-const STSCredentialsPrefix string = "sts:"
-
-// ValidCredentials() returns the list of valid credential strings patterns.
-func ValidCredentials() []string {
-
-	valid := []string{
-		AnonymousCredentialsString,
-		EnvironmentCredentialsString,
-		IAMCredentialsString,
-		STSCredentialsPrefix,
-		ProfileCredentialsTemplate,
-		ProfileFromPathCredentialsTemplate,
-		StaticCredentialsTemplate,
+	patterns := []string{
+		"anon:",
+		"env:",
+		"iam:",
+		"{PROFILE}",
+		"{PATH}:{PROFILE}",
+		"static:{KEY}:{SECRET}:{TOKEN}",
 	}
 
-	return valid
-}
-
-func ValidCredentialsString() string {
-
-	valid := ValidCredentials()
-
-	return fmt.Sprintf("Valid credential flags are: %s", strings.Join(valid, ", "))
-}
-
-// CredentialsStringPatterns() returns the list of valid credential strings patterns. DEPRECATED. Please use `ValidCredentials` instead.
-func CredentialsStringPatterns() []string {
-	slog.Warn("CredentialsStringPatterns() is deprecated. Please call ValidCredentials() instead.")
-	return ValidCredentials()
+	sort.Strings(patterns)
+	return patterns
 }
 
 // NewConfig() returns a new `aws.Config` derived from 'uri' which is expected to be configured

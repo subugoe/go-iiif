@@ -1,6 +1,7 @@
 CWD=$(shell pwd)
 
-GOMOD=$(shell test -f "go.work" && echo "readonly" || echo "vendor")
+#GOMOD=$(shell test -f "go.work" && echo "readonly" || echo "vendor")
+GOMOD=$(shell test -f "go.work" && echo "readonly" || echo "mod")
 LDFLAGS=-s -w
 
 cli:
@@ -13,13 +14,13 @@ docker:
 	@make docker-build
 
 cli-tools: 	
-	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/iiif-server cmd/iiif-server/main.go
-	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/iiif-tile-seed cmd/iiif-tile-seed/main.go
-	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/iiif-transform cmd/iiif-transform/main.go
-	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/iiif-process cmd/iiif-process/main.go
-	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/iiif-process-and-tile cmd/iiif-process-and-tile/main.go
-	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/iiif-dump-config cmd/iiif-dump-config/main.go
-
+	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o /go-iiif/bin/iiif-server cmd/iiif-server/main.go
+	# go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o /go-iiif/bin/iiif-tile-seed cmd/iiif-tile-seed/main.go
+	# go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o /go-iiif/bin/iiif-transform cmd/iiif-transform/main.go
+	# go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o /go-iiif/bin/iiif-process cmd/iiif-process/main.go
+	# go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o /go-iiif/bin/iiif-process-and-tile cmd/iiif-process-and-tile/main.go
+	# go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o /go-iiif/bin/iiif-dump-config cmd/iiif-dump-config/main.go
+	
 docker-build:
 	docker build -f Dockerfile -t go-iiif .
 
@@ -57,5 +58,6 @@ bump-version:
 
 debug-server:
 	go run cmd/iiif-server/main.go \
-		-config-source file://$(CWD)/docs \
+		-config-source file://$(CWD)/cfg/etc/ \
 		-example
+

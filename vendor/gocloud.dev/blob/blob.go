@@ -514,16 +514,11 @@ func (w *Writer) uploadAndClose(r io.Reader) (err error) {
 		// Shouldn't happen.
 		return gcerr.Newf(gcerr.Internal, nil, "blob: uploadAndClose must be the first write")
 	}
-	// When ContentMD5 is being checked, we can't use Upload.
-	if len(w.contentMD5) > 0 {
-		_, err = w.ReadFrom(r)
+	driverUploader, ok := w.w.(driver.Uploader)
+	if ok {
+		err = driverUploader.Upload(r)
 	} else {
-		driverUploader, ok := w.w.(driver.Uploader)
-		if ok {
-			err = driverUploader.Upload(r)
-		} else {
-			_, err = w.ReadFrom(r)
-		}
+		_, err = w.ReadFrom(r)
 	}
 	cerr := w.Close()
 	if err == nil && cerr != nil {
@@ -693,8 +688,7 @@ var NewBucket = newBucket
 // function; see the package documentation for details.
 func newBucket(b driver.Bucket) *Bucket {
 	return &Bucket{
-		b:            b,
-		ioFSCallback: func() (context.Context, *ReaderOptions) { return context.Background(), nil },
+		b: b,
 		tracer: &oc.Tracer{
 			Package:        pkgName,
 			Provider:       oc.ProviderName(b),

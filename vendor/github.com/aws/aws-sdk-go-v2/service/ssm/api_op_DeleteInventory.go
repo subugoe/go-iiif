@@ -71,10 +71,10 @@ type DeleteInventoryOutput struct {
 	// begin other operations.
 	DeletionId *string
 
-	// A summary of the delete operation. For more information about this summary, see [Deleting custom inventory]
+	// A summary of the delete operation. For more information about this summary, see [Understanding the delete inventory summary]
 	// in the Amazon Web Services Systems Manager User Guide.
 	//
-	// [Deleting custom inventory]: https://docs.aws.amazon.com/systems-manager/latest/userguide/inventory-custom.html#delete-custom-inventory-summary
+	// [Understanding the delete inventory summary]: https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-custom.html#sysman-inventory-delete-summary
 	DeletionSummary *types.InventoryDeletionSummary
 
 	// The name of the inventory data type specified in the request.
@@ -129,9 +129,6 @@ func (c *Client) addOperationDeleteInventoryMiddlewares(stack *middleware.Stack,
 	if err = addRecordResponseTiming(stack); err != nil {
 		return err
 	}
-	if err = addSpanRetryLoop(stack, options); err != nil {
-		return err
-	}
 	if err = addClientUserAgent(stack, options); err != nil {
 		return err
 	}
@@ -172,18 +169,6 @@ func (c *Client) addOperationDeleteInventoryMiddlewares(stack *middleware.Stack,
 		return err
 	}
 	if err = addDisableHTTPSMiddleware(stack, options); err != nil {
-		return err
-	}
-	if err = addSpanInitializeStart(stack); err != nil {
-		return err
-	}
-	if err = addSpanInitializeEnd(stack); err != nil {
-		return err
-	}
-	if err = addSpanBuildRequestStart(stack); err != nil {
-		return err
-	}
-	if err = addSpanBuildRequestEnd(stack); err != nil {
 		return err
 	}
 	return nil
