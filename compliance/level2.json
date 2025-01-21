@@ -32,7 +32,7 @@
 		"format": {
 			"jpg": { "syntax": "jpg",  "required": true, "supported": true, "match": "^jpe?g$" },
 			"png": { "syntax": "png",  "required": true, "supported": true, "match": "^png$" },
-			"tif": { "syntax": "tif",  "required": true, "supported": true, "match": "^tiff?$" },
+			"tif": { "syntax": "tif",  "required": false, "supported": false, "match": "^tiff?$" },
 			"gif": { "syntax": "gif",  "required": true, "supported": true, "match": "^gif$" },
 			"pdf": { "syntax": "pdf",  "required": false, "supported": false, "match": "^pdf$" },
 			"jp2": { "syntax": "jp2",  "required": false, "supported": false, "match": "^jp2$" },
