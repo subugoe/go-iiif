@@ -69,6 +69,24 @@ func New(iiif_context string, l iiiflevel.Level, im iiifimage.Image) (*Info, err
 	identifier := strings.TrimLeft(im.Identifier(), "/")
 	id := fmt.Sprintf("%s/%s", endpoint, identifier)
 
+	sizes := []*Size{
+		&Size{dims.Height() / 16.0, dims.Width() / 16.0},
+		&Size{dims.Height() / 8.0, dims.Width() / 8.0},
+		&Size{dims.Height() / 4.0, dims.Width() / 4.0},
+		&Size{dims.Height() / 2.0, dims.Width() / 2.0},
+		&Size{dims.Height() / 1.0, dims.Width() / 1.0},
+	}
+
+	tiles := []*Tile{
+		&Tile{
+			Height: 512,
+			Width:  512,
+			ScaleFactors: []int{
+				1, 2, 4, 8, 16,
+			},
+		},
+	}
+
 	i := &Info{
 		Context:  iiif_context,
 		Protocol: IMAGE_PROTOCOL,
@@ -79,6 +97,8 @@ func New(iiif_context string, l iiiflevel.Level, im iiifimage.Image) (*Info, err
 		},
 		Height: dims.Height(),
 		Width:  dims.Width(),
+		Sizes:  sizes,
+		Tiles:  tiles,
 	}
 
 	return i, nil
