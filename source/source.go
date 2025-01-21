@@ -28,6 +28,7 @@ var register_map = map[string]bool{}
 type Source interface {
 	// Read returns the body of the file located at 'uri'.
 	Read(uri string) ([]byte, error)
+	Key() string
 }
 
 func NewSourceFromConfig(config *iiifconfig.Config) (Source, error) {

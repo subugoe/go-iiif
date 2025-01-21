@@ -54,6 +54,10 @@ func (bs *MemorySource) String() string {
 	return fmt.Sprintf("memory://%s", bs.key)
 }
 
+func (bs *MemorySource) Key() string {
+	return bs.key
+}
+
 func (bs *MemorySource) Read(key string) ([]byte, error) {
 
 	v, exists := memory_cache.Get(key)

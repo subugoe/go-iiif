@@ -75,7 +75,10 @@ func ImageHandler(config *iiifconfig.Config, driver iiifdriver.Driver, images_ca
 			cacheHit.Add(1)
 
 			source, _ := iiifsource.NewMemorySource(body)
-			image, _ := driver.NewImageFromConfigWithSource(config, source, "cache")
+
+			key := source.Key()
+			//image, _ := driver.NewImageFromConfigWithSource(config, source, "cache")
+			image, _ := driver.NewImageFromConfigWithSource(config, source, key)
 
 			w.Header().Set("Content-Type", image.ContentType())
 			w.Write(image.Body())
