@@ -1,5 +1,6 @@
-#FROM golang:1.22-alpine as builder
-FROM golang:1.23-alpine3.19 AS builder
+FROM golang:1.22-alpine 
+#as builder
+#FROM golang:1.23-alpine3.19 AS builder
 
 ADD . /go-iiif
 
@@ -16,7 +17,7 @@ RUN mkdir -p /go-iiif/bin/
 
 RUN apk update \
     && apk upgrade \
-    && apk add make  \
+    && apk add make curl  \
     && cd /go-iiif \
     && make cli \
     && go install github.com/go-delve/delve/cmd/dlv@latest
@@ -30,7 +31,7 @@ VOLUME /etc/go-iiif
 VOLUME /usr/local/go-iiif
 
 #EXPOSE 40000 8080 2345
-EXPOSE 8080 2345
+#EXPOSE 8080 2345 6161
 
 #CMD ["dlv", "debug", "--headless", "--listen=:40000", "--api-version=2", "--accept-multiclient", "--log"]
 # CMD ["/go/run.sh"]
