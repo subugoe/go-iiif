@@ -91,8 +91,12 @@ func (us *URISource) Read(id string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	decodedURI, err := url.QueryUnescape(uri)
+	if err != nil {
+		return nil, err
+	}
 
-	req, err := http.NewRequest("GET", uri, nil)
+	req, err := http.NewRequest("GET", decodedURI, nil)
 
 	rsp, err := us.client.Do(req)
 
