@@ -3,34 +3,13 @@ services:
   go-iiif:
     build:
       context: .
-    command: /go/iiif-server -host 0.0.0.0 -config-source file:///etc/iiif-server
-    #command: /go/run.sh
-    #command: tail -f /dev/null
+    command: /go/iiif-server -server-uri http://0.0.0.0:8080 -config-source file:///etc/iiif-server
     ports:
-      #- "6161:8080"
-      - "8080:8080"
-      - "2345:2345"
-    #networks:
-      #iiif:
-    network_mode: bridge
+      - "6701:8080"
+    working_dir: /go
     volumes:
-      - ./data/images/sub_gdz_PPN235181684_0033:/usr/local/go-iiif
-      - ./dlv.sh:/go/run.sh
-      - ./cfg/etc:/etc/iiif-server
-    #environment:  
-    #  - config_source=/etc/go-iiif
+      - ./cfg/etc/config.json:/etc/iiif-server/config.json
+      - ./cfg/etc/instructions.json:/etc/iiif-server/instructions.json
     env_file:
       - .env
-    #entrypoint: /go/run.sh
-    #security_opt: 
-    #  - "seccomp:unconfined" #need for running delve debug correctly and attaching to one from host
-
-  nginx:
-    image: nginx:latest
-    ports:
-      - "8080:80"
-    network_mode: bridge
-
-#networks:
-#  iiif:
-#    driver: bridge
+    

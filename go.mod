@@ -1,6 +1,6 @@
 module github.com/go-iiif/go-iiif/v6
 
-go 1.22.4
+go 1.23
 
 require (
 	github.com/aaronland/go-colours v0.1.2
