@@ -97,7 +97,7 @@ func ImageHandler(config *iiifconfig.Config, driver iiifdriver.Driver, images_ca
 			(20160901/thisisaaronland)
 		*/
 
-		if transformation.HasTransformation() {
+		if transformation.HasTransformation() || image.Format() != transformation.Format {
 
 			cacheMiss.Add(1)
 
