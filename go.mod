@@ -1,8 +1,6 @@
 module github.com/go-iiif/go-iiif/v6
 
-go 1.23
-
-toolchain go1.23.2
+go 1.25.0
 
 require (
 	github.com/aaronland/go-colours v0.1.2
@@ -37,7 +35,7 @@ require (
 	github.com/whosonfirst/algnhsa v0.1.0
 	github.com/whosonfirst/go-sanitize v0.1.0
 	gocloud.dev v0.40.0
-	golang.org/x/image v0.22.0
+	golang.org/x/image v0.38.0
 )
 
 require (
@@ -103,7 +101,7 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/net v0.33.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/text v0.35.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240716161551-93cc26a95ae9 // indirect
 	google.golang.org/api v0.191.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240812133136-8ffd90a71988 // indirect
